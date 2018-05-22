@@ -15,6 +15,13 @@ using System.Windows.Forms;
  * This program is a better game of 21 that the user can play against the computer 
 */
 
+
+    // Tiva's Notes!!!!!!
+    /*
+     * Generate cards is not finished
+     * Calculate Users cards are not finished 
+     * Test the generating of the Picture Boxes
+     */
 namespace AssignmentSixTivaR
 {
     public partial class frmAssignmentSix : Form
@@ -32,10 +39,10 @@ namespace AssignmentSixTivaR
         int maxNum;
 
         // To place the picture boxes in the correct places 
-        int userLastPictureBoxX = 75;
-        int userLastPictureBoxY = 277;
-        int computerLastPictureBoxX = 379;
-        int computerLastPictureBoxY = 277;
+        int userLastPictureBoxX = 136;
+        int userLastPictureBoxY = 295;
+        int computerLastPictureBoxX = 136;
+        int computerLastPictureBoxY = 94;
 
 
         // To make the random number generator
@@ -168,6 +175,15 @@ namespace AssignmentSixTivaR
             //Need to Delete picture boxes and everything from previous rounds
             ///////////////////////////////////////////////////////
 
+            // Remove generated picture boxes
+            this.RemoveGeneratedPictureBoxes();
+
+            // Set the values back to the original amounts for their locations
+            userLastPictureBoxX = 136;
+            userLastPictureBoxY = 295;
+            computerLastPictureBoxX = 136;
+            computerLastPictureBoxY = 94;
+
             // Loop that will make sure the User is dealt at least two cards
             for (int counter = 0; counter <= 2; counter++)
             {
@@ -208,44 +224,12 @@ namespace AssignmentSixTivaR
 
         }
 
+        // Function: CalculateUserCards
+        // Input: 
+        // Output:
+        // Description:
         private void CalculateUserCards (string cardValue)
         {
-
-        }
-
-        private void DisplayCard(string newCard)
-        {
-            // Local variables 
-            int compPicX, compPicY;
-            int userPicX, userPicY;
-            // Set the appropriate places for the picture boxes and change the y value
-            if (computerTurn == true)
-            {
-                computerLastPictureBoxY = computerLastPictureBoxY + 136;
-            }
-            else
-            {
-                userLastPictureBoxY = userLastPictureBoxY + 136;
-            }
-
-            // Set them to their shortNames (Used for clarity)
-            userPicY = userLastPictureBoxY;
-            userPicX = userLastPictureBoxX;
-            compPicY = computerLastPictureBoxY;
-            compPicX = computerLastPictureBoxX;
-
-            // To display the card
-            if (newCard == "AH")
-            {
-                if (computerTurn == true)
-                {
-                    GeneratePictureBox(compPicX, compPicY);
-                }
-                else
-                {
-                    GeneratePictureBox(userPicX, userPicY);
-                }
-            }
 
         }
 
@@ -253,7 +237,28 @@ namespace AssignmentSixTivaR
         // Input:
         // Output:
         // Description:
-        private void GeneratePictureBox(int x, int y)
+        private void DisplayCard(string newCard)
+        {
+            // Set the appropriate places for the picture boxes and change the y value
+            if (computerTurn == true)
+            {
+                computerLastPictureBoxX = computerLastPictureBoxX + 121;
+                GeneratePictureBox(computerLastPictureBoxX, computerLastPictureBoxY, newCard);
+            }
+            else
+            {
+                userLastPictureBoxX = userLastPictureBoxX + 121;
+                GeneratePictureBox(userLastPictureBoxX, userLastPictureBoxY, newCard);
+            }
+
+
+        }
+
+        // Function: 
+        // Input:
+        // Output:
+        // Description:
+        private void GeneratePictureBox(int x, int y, string newCard)
         {
             // Dynamically generate a new picture box and a new point at the given location
             PictureBox tmpPicCard = new PictureBox();
@@ -263,11 +268,43 @@ namespace AssignmentSixTivaR
             tmpPicCard.Location = pntPic;
 
             // Assign the image to the pictureBox 
-            tmpPicCard.Image = Properties.Resources.Front;
+            if (newCard == "AH")
+            {
+                if (computerTurn == true)
+                {
+                    tmpPicCard.Image = Properties.Resources.AH;
+                }
+                else
+                {
+                    tmpPicCard.Image = Properties.Resources.AH;
+                }
+            }
 
             // stretch the image to the size of the picture box
-            //tmpPicCard.SizeMode
+            tmpPicCard.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            // Set the picture box size
+            tmpPicCard.ClientSize = new Size(115, 130);
+
+            // Add the picture box to the form
+            this.Controls.Add(tmpPicCard);
         }
 
+        // Function: RemoveGeneratedPictureBoxes 
+        // Input:
+        // Output:
+        // Description:
+        private void RemoveGeneratedPictureBoxes ()
+        {
+            foreach (Control control in this.Controls)
+            {
+                PictureBox picture = control as PictureBox;
+                if (picture != null)
+                {
+                    this.Controls.Remove(picture);
+                }
+            }
+            
+        }
     }
 }

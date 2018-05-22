@@ -57,7 +57,7 @@
             // 
             this.grbUserAction.Controls.Add(this.btnStay);
             this.grbUserAction.Controls.Add(this.btnHit);
-            this.grbUserAction.Location = new System.Drawing.Point(26, 133);
+            this.grbUserAction.Location = new System.Drawing.Point(12, 336);
             this.grbUserAction.Name = "grbUserAction";
             this.grbUserAction.Size = new System.Drawing.Size(200, 100);
             this.grbUserAction.TabIndex = 0;
@@ -85,7 +85,7 @@
             // lblComputerTag
             // 
             this.lblComputerTag.AutoSize = true;
-            this.lblComputerTag.Location = new System.Drawing.Point(360, 251);
+            this.lblComputerTag.Location = new System.Drawing.Point(254, 55);
             this.lblComputerTag.Name = "lblComputerTag";
             this.lblComputerTag.Size = new System.Drawing.Size(52, 13);
             this.lblComputerTag.TabIndex = 1;
@@ -94,7 +94,7 @@
             // lblUserTag
             // 
             this.lblUserTag.AutoSize = true;
-            this.lblUserTag.Location = new System.Drawing.Point(49, 251);
+            this.lblUserTag.Location = new System.Drawing.Point(254, 259);
             this.lblUserTag.Name = "lblUserTag";
             this.lblUserTag.Size = new System.Drawing.Size(26, 13);
             this.lblUserTag.TabIndex = 2;
@@ -170,7 +170,7 @@
             // lblCompCardTotal
             // 
             this.lblCompCardTotal.AutoSize = true;
-            this.lblCompCardTotal.Location = new System.Drawing.Point(466, 251);
+            this.lblCompCardTotal.Location = new System.Drawing.Point(360, 55);
             this.lblCompCardTotal.Name = "lblCompCardTotal";
             this.lblCompCardTotal.Size = new System.Drawing.Size(74, 13);
             this.lblCompCardTotal.TabIndex = 7;
@@ -179,7 +179,7 @@
             // lblUserCardTotal
             // 
             this.lblUserCardTotal.AutoSize = true;
-            this.lblUserCardTotal.Location = new System.Drawing.Point(152, 251);
+            this.lblUserCardTotal.Location = new System.Drawing.Point(357, 259);
             this.lblUserCardTotal.Name = "lblUserCardTotal";
             this.lblUserCardTotal.Size = new System.Drawing.Size(74, 13);
             this.lblUserCardTotal.TabIndex = 8;
@@ -188,7 +188,7 @@
             // picDeck
             // 
             this.picDeck.Image = global::AssignmentSixTivaR.Properties.Resources.Front;
-            this.picDeck.Location = new System.Drawing.Point(379, 277);
+            this.picDeck.Location = new System.Drawing.Point(257, 295);
             this.picDeck.Name = "picDeck";
             this.picDeck.Size = new System.Drawing.Size(115, 130);
             this.picDeck.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -200,7 +200,7 @@
             this.grbRoundsInfo.Controls.Add(this.lblRounds);
             this.grbRoundsInfo.Controls.Add(this.lblComputerOverallScore);
             this.grbRoundsInfo.Controls.Add(this.lblUserOverallScore);
-            this.grbRoundsInfo.Location = new System.Drawing.Point(232, 32);
+            this.grbRoundsInfo.Location = new System.Drawing.Point(33, 199);
             this.grbRoundsInfo.Name = "grbRoundsInfo";
             this.grbRoundsInfo.Padding = new System.Windows.Forms.Padding(0);
             this.grbRoundsInfo.Size = new System.Drawing.Size(132, 100);
@@ -210,7 +210,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::AssignmentSixTivaR.Properties.Resources.Front;
-            this.pictureBox1.Location = new System.Drawing.Point(379, 413);
+            this.pictureBox1.Location = new System.Drawing.Point(257, 94);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(115, 130);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
