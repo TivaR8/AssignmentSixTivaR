@@ -43,14 +43,14 @@
             this.lblRounds = new System.Windows.Forms.Label();
             this.lblCompCardTotal = new System.Windows.Forms.Label();
             this.lblUserCardTotal = new System.Windows.Forms.Label();
-            this.picDeck = new System.Windows.Forms.PictureBox();
             this.grbRoundsInfo = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.grbAceElevenOrOne = new System.Windows.Forms.GroupBox();
+            this.btnAceEleven = new System.Windows.Forms.Button();
+            this.btnAceOne = new System.Windows.Forms.Button();
             this.grbUserAction.SuspendLayout();
             this.mnuMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeck)).BeginInit();
             this.grbRoundsInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.grbAceElevenOrOne.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbUserAction
@@ -72,6 +72,7 @@
             this.btnStay.TabIndex = 1;
             this.btnStay.Text = "Stay";
             this.btnStay.UseVisualStyleBackColor = true;
+            this.btnStay.Click += new System.EventHandler(this.btnStay_Click);
             // 
             // btnHit
             // 
@@ -185,16 +186,6 @@
             this.lblUserCardTotal.TabIndex = 8;
             this.lblUserCardTotal.Text = "Card Total = 0";
             // 
-            // picDeck
-            // 
-            this.picDeck.Image = global::AssignmentSixTivaR.Properties.Resources.Front;
-            this.picDeck.Location = new System.Drawing.Point(257, 295);
-            this.picDeck.Name = "picDeck";
-            this.picDeck.Size = new System.Drawing.Size(115, 130);
-            this.picDeck.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picDeck.TabIndex = 9;
-            this.picDeck.TabStop = false;
-            // 
             // grbRoundsInfo
             // 
             this.grbRoundsInfo.Controls.Add(this.lblRounds);
@@ -207,24 +198,44 @@
             this.grbRoundsInfo.TabIndex = 10;
             this.grbRoundsInfo.TabStop = false;
             // 
-            // pictureBox1
+            // grbAceElevenOrOne
             // 
-            this.pictureBox1.Image = global::AssignmentSixTivaR.Properties.Resources.Front;
-            this.pictureBox1.Location = new System.Drawing.Point(257, 94);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(115, 130);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
+            this.grbAceElevenOrOne.Controls.Add(this.btnAceEleven);
+            this.grbAceElevenOrOne.Controls.Add(this.btnAceOne);
+            this.grbAceElevenOrOne.Location = new System.Drawing.Point(12, 64);
+            this.grbAceElevenOrOne.Name = "grbAceElevenOrOne";
+            this.grbAceElevenOrOne.Size = new System.Drawing.Size(200, 100);
+            this.grbAceElevenOrOne.TabIndex = 2;
+            this.grbAceElevenOrOne.TabStop = false;
+            this.grbAceElevenOrOne.Text = "Would you like the ace to count as an eleven or a one";
+            // 
+            // btnAceEleven
+            // 
+            this.btnAceEleven.Location = new System.Drawing.Point(102, 57);
+            this.btnAceEleven.Name = "btnAceEleven";
+            this.btnAceEleven.Size = new System.Drawing.Size(75, 23);
+            this.btnAceEleven.TabIndex = 1;
+            this.btnAceEleven.Text = "Eleven";
+            this.btnAceEleven.UseVisualStyleBackColor = true;
+            this.btnAceEleven.Click += new System.EventHandler(this.btnAceEleven_Click);
+            // 
+            // btnAceOne
+            // 
+            this.btnAceOne.Location = new System.Drawing.Point(21, 57);
+            this.btnAceOne.Name = "btnAceOne";
+            this.btnAceOne.Size = new System.Drawing.Size(75, 23);
+            this.btnAceOne.TabIndex = 0;
+            this.btnAceOne.Text = "One";
+            this.btnAceOne.UseVisualStyleBackColor = true;
+            this.btnAceOne.Click += new System.EventHandler(this.btnAceOne_Click);
             // 
             // frmAssignmentSix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 509);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.grbAceElevenOrOne);
             this.Controls.Add(this.grbRoundsInfo);
-            this.Controls.Add(this.picDeck);
             this.Controls.Add(this.lblUserCardTotal);
             this.Controls.Add(this.lblCompCardTotal);
             this.Controls.Add(this.lblUserTag);
@@ -237,10 +248,9 @@
             this.grbUserAction.ResumeLayout(false);
             this.mnuMenu.ResumeLayout(false);
             this.mnuMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picDeck)).EndInit();
             this.grbRoundsInfo.ResumeLayout(false);
             this.grbRoundsInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.grbAceElevenOrOne.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,9 +273,10 @@
         private System.Windows.Forms.Label lblRounds;
         private System.Windows.Forms.Label lblCompCardTotal;
         private System.Windows.Forms.Label lblUserCardTotal;
-        private System.Windows.Forms.PictureBox picDeck;
         private System.Windows.Forms.GroupBox grbRoundsInfo;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox grbAceElevenOrOne;
+        private System.Windows.Forms.Button btnAceEleven;
+        private System.Windows.Forms.Button btnAceOne;
     }
 }
 

@@ -15,13 +15,6 @@ using System.Windows.Forms;
  * This program is a better game of 21 that the user can play against the computer 
 */
 
-
-    // Tiva's Notes!!!!!!
-    /*
-     * Generate cards is not finished
-     * Calculate Users cards are not finished 
-     * Test the generating of the Picture Boxes
-     */
 namespace AssignmentSixTivaR
 {
     public partial class frmAssignmentSix : Form
@@ -37,6 +30,12 @@ namespace AssignmentSixTivaR
         int roundsPlayed = 0;
         bool computerTurn = false;
         int maxNum;
+
+        // User's Total
+        int userTotal;
+
+        // Computer's Total
+        int computerTotal;
 
         // To place the picture boxes in the correct places 
         int userLastPictureBoxX = 136;
@@ -84,70 +83,70 @@ namespace AssignmentSixTivaR
 
 
             // Add all of the Cards to the cardDeck 
-            cardDeck.Add("AH");
-            cardDeck.Add("AD");
-            cardDeck.Add("AC");
-            cardDeck.Add("AS");
+            cardDeck.Add("A H");
+            cardDeck.Add("A D");
+            cardDeck.Add("A C");
+            cardDeck.Add("A S");
 
-            cardDeck.Add("2H");
-            cardDeck.Add("2D");
-            cardDeck.Add("2C");
-            cardDeck.Add("2S");
+            cardDeck.Add("2 H");
+            cardDeck.Add("2 D");
+            cardDeck.Add("2 C");
+            cardDeck.Add("2 S");
 
-            cardDeck.Add("3H");
-            cardDeck.Add("3D");
-            cardDeck.Add("3C");
-            cardDeck.Add("3S");
+            cardDeck.Add("3 H");
+            cardDeck.Add("3 D");
+            cardDeck.Add("3 C");
+            cardDeck.Add("3 S");
 
-            cardDeck.Add("4H");
-            cardDeck.Add("4D");
-            cardDeck.Add("4C");
-            cardDeck.Add("4S");
+            cardDeck.Add("4 H");
+            cardDeck.Add("4 D");
+            cardDeck.Add("4 C");
+            cardDeck.Add("4 S");
 
-            cardDeck.Add("5H");
-            cardDeck.Add("5D");
-            cardDeck.Add("5C");
-            cardDeck.Add("5S");
+            cardDeck.Add("5 H");
+            cardDeck.Add("5 D");
+            cardDeck.Add("5 C");
+            cardDeck.Add("5 S");
 
-            cardDeck.Add("6H");
-            cardDeck.Add("6D");
-            cardDeck.Add("6C");
-            cardDeck.Add("6S");
+            cardDeck.Add("6 H");
+            cardDeck.Add("6 D");
+            cardDeck.Add("6 C");
+            cardDeck.Add("6 S");
 
-            cardDeck.Add("7H");
-            cardDeck.Add("7D");
-            cardDeck.Add("7C");
-            cardDeck.Add("7S");
+            cardDeck.Add("7 H");
+            cardDeck.Add("7 D");
+            cardDeck.Add("7 C");
+            cardDeck.Add("7 S");
 
-            cardDeck.Add("8H");
-            cardDeck.Add("8D");
-            cardDeck.Add("8C");
-            cardDeck.Add("8S");
+            cardDeck.Add("8 H");
+            cardDeck.Add("8 D");
+            cardDeck.Add("8 C");
+            cardDeck.Add("8 S");
 
-            cardDeck.Add("9H");
-            cardDeck.Add("9D");
-            cardDeck.Add("9C");
-            cardDeck.Add("9S");
+            cardDeck.Add("9 H");
+            cardDeck.Add("9 D");
+            cardDeck.Add("9 C");
+            cardDeck.Add("9 S");
 
-            cardDeck.Add("10H");
-            cardDeck.Add("10D");
-            cardDeck.Add("10C");
-            cardDeck.Add("10S");
+            cardDeck.Add("10 H");
+            cardDeck.Add("10 D");
+            cardDeck.Add("10 C");
+            cardDeck.Add("10 S");
 
-            cardDeck.Add("JH");
-            cardDeck.Add("JD");
-            cardDeck.Add("JC");
-            cardDeck.Add("JS");
+            cardDeck.Add("J H");
+            cardDeck.Add("J D");
+            cardDeck.Add("J C");
+            cardDeck.Add("J S");
 
-            cardDeck.Add("QH");
-            cardDeck.Add("QD");
-            cardDeck.Add("QC");
-            cardDeck.Add("QS");
+            cardDeck.Add("Q H");
+            cardDeck.Add("Q D");
+            cardDeck.Add("Q C");
+            cardDeck.Add("Q S");
 
-            cardDeck.Add("KH");
-            cardDeck.Add("KD");
-            cardDeck.Add("KC");
-            cardDeck.Add("KS");
+            cardDeck.Add("K H");
+            cardDeck.Add("K D");
+            cardDeck.Add("K C");
+            cardDeck.Add("K S");
 
             // Acess the Start New Game Function
             this.StartNewGame();
@@ -171,10 +170,16 @@ namespace AssignmentSixTivaR
             userHand.Clear();
             computerHand.Clear();
 
+            // set totals to 0
+            computerTotal = 0;
+            userTotal = 0;
+
             ///////////////////////////////////////////////////////
             //Need to Delete picture boxes and everything from previous rounds
             ///////////////////////////////////////////////////////
 
+            // Make sure ace and eleven are hidden 
+            grbAceElevenOrOne.Hide();
             // Remove generated picture boxes
             this.RemoveGeneratedPictureBoxes();
 
@@ -185,7 +190,7 @@ namespace AssignmentSixTivaR
             computerLastPictureBoxY = 94;
 
             // Loop that will make sure the User is dealt at least two cards
-            for (int counter = 0; counter <= 2; counter++)
+            for (int counter = 0; counter < 2; counter++)
             {
                 this.DealUserNewCard();
             }
@@ -225,18 +230,69 @@ namespace AssignmentSixTivaR
         }
 
         // Function: CalculateUserCards
-        // Input: 
-        // Output:
-        // Description:
+        // Input: cardValue
+        // Output: void
+        // Description: Calculate the users cards 
         private void CalculateUserCards (string cardValue)
         {
+            if (cardValue == "A H" || cardValue == "A D" || cardValue == "A C" || cardValue == "A S")
+            {
+                grbAceElevenOrOne.Show();
+                grbUserAction.Enabled = false;
+            }
+            else if (cardValue == "2 H" || cardValue == "2 D" || cardValue == "2 C" || cardValue == "2 S")
+            {
+                userTotal = (userTotal + 2);
+            }
+            else if (cardValue == "3 H" || cardValue == "3 D" || cardValue == "3 C" || cardValue == "3 S")
+            {
+                userTotal = (userTotal + 3);
+            }
+            else if (cardValue == "4 H" || cardValue == "4 D" || cardValue == "4 C" || cardValue == "4 S")
+            {
+                userTotal = (userTotal + 4);
+            }
+            else if (cardValue == "5 H" || cardValue == "5 D" || cardValue == "5 C" || cardValue == "5 S")
+            {
+                userTotal = (userTotal + 5);
+            }
+            else if (cardValue == "6 H" || cardValue == "6 D" || cardValue == "6 C" || cardValue == "6 S")
+            {
+                userTotal = (userTotal + 6);
+            }
+            else if (cardValue == "7 H" || cardValue == "7 D" || cardValue == "7 C" || cardValue == "7 S")
+            {
+                userTotal = (userTotal + 7);
+            }
+            else if (cardValue == "8 H" || cardValue == "8 D" || cardValue == "8 C" || cardValue == "8 S")
+            {
+                userTotal = (userTotal + 8);
+            }
+            else if (cardValue == "9 H" || cardValue == "9 D" || cardValue == "9 C" || cardValue == "9 S")
+            {
+                userTotal = (userTotal + 9);
+            }
+            else
+            {
+                userTotal = (userTotal + 10);
+            }
 
+            if (userTotal > 15)
+            {
+                MessageBox.Show("The odds are not in your favour, " +
+                    "you should probably press stay", "Warning");
+            }
+
+            if (userTotal > BLACKJACK)
+            {
+                FindWinner();
+            }
         }
 
-        // Function: 
-        // Input:
-        // Output:
-        // Description:
+        // Function: DisplayCard
+        // Input: newCard
+        // Output: void
+        // Description: To display the correct cards in the right places.
         private void DisplayCard(string newCard)
         {
             // Set the appropriate places for the picture boxes and change the y value
@@ -254,9 +310,9 @@ namespace AssignmentSixTivaR
 
         }
 
-        // Function: 
-        // Input:
-        // Output:
+        // Function: GeneratePictureBox
+        // Input: int x, int y, string newCard
+        // Output: void
         // Description:
         private void GeneratePictureBox(int x, int y, string newCard)
         {
@@ -268,17 +324,219 @@ namespace AssignmentSixTivaR
             tmpPicCard.Location = pntPic;
 
             // Assign the image to the pictureBox 
-            if (newCard == "AH")
+            if (newCard == "A H")
             {
-                if (computerTurn == true)
-                {
-                    tmpPicCard.Image = Properties.Resources.AH;
-                }
-                else
-                {
-                    tmpPicCard.Image = Properties.Resources.AH;
-                }
+                tmpPicCard.Image = Properties.Resources.AH;
             }
+            else if (newCard == "A D")
+            {
+                tmpPicCard.Image = Properties.Resources.AD;
+            }
+            else if (newCard == "A C")
+            {
+                tmpPicCard.Image = Properties.Resources.AC;
+            }
+            else if (newCard == "A S")
+            {
+                tmpPicCard.Image = Properties.Resources.AS;
+            }
+            else if (newCard == "2 H")
+            {
+                tmpPicCard.Image = Properties.Resources._2H;
+            }
+            else if (newCard == "2 D")
+            {
+                tmpPicCard.Image = Properties.Resources._2D;
+            }
+            else if (newCard == "2 C")
+            {
+                tmpPicCard.Image = Properties.Resources._2C;
+            }
+            else if (newCard == "2 S")
+            {
+                tmpPicCard.Image = Properties.Resources._2S;
+            }
+            else if (newCard == "3 H")
+            {
+                tmpPicCard.Image = Properties.Resources._3H;
+            }
+            else if (newCard == "3 D")
+            {
+                tmpPicCard.Image = Properties.Resources._3D;
+            }
+            else if (newCard == "3 C")
+            {
+                tmpPicCard.Image = Properties.Resources._3C;
+            }
+            else if (newCard == "3 S")
+            {
+                tmpPicCard.Image = Properties.Resources._3S;
+            }
+            else if (newCard == "4 H")
+            {
+                tmpPicCard.Image = Properties.Resources._4H;
+            }
+            else if (newCard == "4 D")
+            {
+                tmpPicCard.Image = Properties.Resources._4D;
+            }
+            else if (newCard == "4 C")
+            {
+                tmpPicCard.Image = Properties.Resources._4C;
+            }
+            else if (newCard == "4 S")
+            {
+                tmpPicCard.Image = Properties.Resources._4S;
+            }
+            else if (newCard == "5 H")
+            {
+                tmpPicCard.Image = Properties.Resources._5H;
+            }
+            else if (newCard == "5 D")
+            {
+                tmpPicCard.Image = Properties.Resources._5D;
+            }
+            else if (newCard == "5 C")
+            {
+                tmpPicCard.Image = Properties.Resources._5C;
+            }
+            else if (newCard == "5 S")
+            {
+                tmpPicCard.Image = Properties.Resources._5S;
+            }
+            else if (newCard == "6 H")
+            {
+                tmpPicCard.Image = Properties.Resources._6H;
+            }
+            else if (newCard == "6 D")
+            {
+                tmpPicCard.Image = Properties.Resources._6D;
+            }
+            else if (newCard == "6 C")
+            {
+                tmpPicCard.Image = Properties.Resources._6C;
+            }
+            else if (newCard == "6 S")
+            {
+                tmpPicCard.Image = Properties.Resources._6S;
+            }
+            else if (newCard == "7 H")
+            {
+                tmpPicCard.Image = Properties.Resources._7H;
+            }
+            else if (newCard == "7 D")
+            {
+                tmpPicCard.Image = Properties.Resources._7D;
+            }
+            else if (newCard == "7 C")
+            {
+                tmpPicCard.Image = Properties.Resources._7C;
+            }
+            else if (newCard == "7 S")
+            {
+                tmpPicCard.Image = Properties.Resources._7S;
+            }
+            else if (newCard == "8 H")
+            {
+                tmpPicCard.Image = Properties.Resources._8H;
+            }
+            else if (newCard == "8 D")
+            {
+                tmpPicCard.Image = Properties.Resources._8D;
+            }
+            else if (newCard == "8 C")
+            {
+                tmpPicCard.Image = Properties.Resources._8C;
+            }
+            else if (newCard == "8 S")
+            {
+                tmpPicCard.Image = Properties.Resources._8S;
+            }
+            else if (newCard == "9 H")
+            {
+                tmpPicCard.Image = Properties.Resources._9H;
+            }
+            else if (newCard == "9 D")
+            {
+                tmpPicCard.Image = Properties.Resources._9D;
+            }
+            else if (newCard == "9 C")
+            {
+                tmpPicCard.Image = Properties.Resources._9C;
+            }
+            else if (newCard == "9 S")
+            {
+                tmpPicCard.Image = Properties.Resources._9S;
+            }
+            else if (newCard == "10 H")
+            {
+                tmpPicCard.Image = Properties.Resources._10H;
+            }
+            else if (newCard == "10 D")
+            {
+                tmpPicCard.Image = Properties.Resources._10D;
+            }
+            else if (newCard == "10 C")
+            {
+                tmpPicCard.Image = Properties.Resources._10C;
+            }
+            else if (newCard == "10 S")
+            {
+                tmpPicCard.Image = Properties.Resources._10S;
+            }
+            else if (newCard == "J H")
+            {
+                tmpPicCard.Image = Properties.Resources.JH;
+            }
+            else if (newCard == "J D")
+            {
+                tmpPicCard.Image = Properties.Resources.JD;
+            }
+            else if (newCard == "J C")
+            {
+                tmpPicCard.Image = Properties.Resources.JC;
+            }
+            else if (newCard == "J S")
+            {
+                tmpPicCard.Image = Properties.Resources.JS;
+            }
+            else if (newCard == "Q H")
+            {
+                tmpPicCard.Image = Properties.Resources.QH;
+            }
+            else if (newCard == "Q D")
+            {
+                tmpPicCard.Image = Properties.Resources.QD;
+            }
+            else if (newCard == "Q C")
+            {
+                tmpPicCard.Image = Properties.Resources.QC;
+            }
+            else if (newCard == "Q S")
+            {
+                tmpPicCard.Image = Properties.Resources.QS;
+            }
+            else if (newCard == "K H")
+            {
+                tmpPicCard.Image = Properties.Resources.KH;
+            }
+            else if (newCard == "K D")
+            {
+                tmpPicCard.Image = Properties.Resources.KD;
+            }
+            else if (newCard == "K C")
+            {
+                tmpPicCard.Image = Properties.Resources.JC;
+            }
+            else if (newCard == "K S")
+            {
+                tmpPicCard.Image = Properties.Resources.KS;
+            }
+            else
+            {
+                tmpPicCard.Image = Properties.Resources.Front;
+            }
+
 
             // stretch the image to the size of the picture box
             tmpPicCard.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -306,5 +564,209 @@ namespace AssignmentSixTivaR
             }
             
         }
+
+        private void btnAceOne_Click(object sender, EventArgs e)
+        {
+
+            userTotal = (userTotal + 1);
+
+            grbUserAction.Enabled = true;
+
+            grbAceElevenOrOne.Hide();
+        }
+
+        private void btnAceEleven_Click(object sender, EventArgs e)
+        {
+
+            userTotal = (userTotal + 11);
+
+            grbUserAction.Enabled = true;
+
+            grbAceElevenOrOne.Hide();
+        }
+
+        // Function: DealComputerNewCard
+        // Input: None
+        // Output: newComputerCard
+        // Description: Selects the computer's new cards
+        private void DealComputerNewCard()
+        {
+            // Local variables
+            int randomComputerCard;
+            string newComputerCard;
+
+            // Set the max num to be equal to how many cards are left in the deck
+            maxNum = cardDeck.Count();
+
+            // Randomly generate the index Number
+            randomComputerCard = randomNumberGenerator.Next(MIN_NUM, maxNum + 1);
+
+            // Add the card from cardDeck to userHand 
+            newComputerCard = cardDeck[randomComputerCard];
+
+            computerHand.Add(newComputerCard);
+
+            // Delete the card from cardDeck
+            cardDeck.RemoveAt(randomComputerCard);
+
+            // Calculate the user's cards together
+            this.CalculateComputerCards(newComputerCard);
+
+            // Display the card
+            this.DisplayCard(newComputerCard);
+
+        }
+
+        private void btnStay_Click(object sender, EventArgs e)
+        {
+            DealComputerNewCard();
+        }
+
+        // Function: CalculateComputerCards
+        // Input: computerValue
+        // Output: void
+        // Description: Calculate the computer cards 
+        private void CalculateComputerCards(string cardValue)
+        {
+            if (cardValue == "A H" || cardValue == "A D" || cardValue == "A C" || cardValue == "A S")
+            {
+                grbAceElevenOrOne.Show();
+                grbUserAction.Enabled = false;
+            }
+            else if (cardValue == "2 H" || cardValue == "2 D" || cardValue == "2 C" || cardValue == "2 S")
+            {
+                userTotal = (computerTotal + 2);
+            }
+            else if (cardValue == "3 H" || cardValue == "3 D" || cardValue == "3 C" || cardValue == "3 S")
+            {
+                userTotal = (computerTotal + 3);
+            }
+            else if (cardValue == "4 H" || cardValue == "4 D" || cardValue == "4 C" || cardValue == "4 S")
+            {
+                userTotal = (computerTotal + 4);
+            }
+            else if (cardValue == "5 H" || cardValue == "5 D" || cardValue == "5 C" || cardValue == "5 S")
+            {
+                userTotal = (computerTotal + 5);
+            }
+            else if (cardValue == "6 H" || cardValue == "6 D" || cardValue == "6 C" || cardValue == "6 S")
+            {
+                userTotal = (computerTotal + 6);
+            }
+            else if (cardValue == "7 H" || cardValue == "7 D" || cardValue == "7 C" || cardValue == "7 S")
+            {
+                userTotal = (computerTotal + 7);
+            }
+            else if (cardValue == "8 H" || cardValue == "8 D" || cardValue == "8 C" || cardValue == "8 S")
+            {
+                userTotal = (computerTotal + 8);
+            }
+            else if (cardValue == "9 H" || cardValue == "9 D" || cardValue == "9 C" || cardValue == "9 S")
+            {
+                userTotal = (computerTotal + 9);
+            }
+            else
+            {
+                userTotal = (computerTotal + 10);
+            }
+
+            if (computerTotal > 14)
+            {
+                FindWinner();
+            }
+            else
+            {
+                DealComputerNewCard();
+            }
+
+            if (computerTotal > BLACKJACK)
+            {
+                FindWinner();
+            }
+        }
+
+        // FindWinner
+        public void FindWinner()
+        {
+            // Find the winner
+            if (userTotal > BLACKJACK && computerTotal < BLACKJACK)
+            {
+                computerOverallScore = (computerOverallScore + 1);
+
+                MessageBox.Show("You lost" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal > BLACKJACK && userTotal < BLACKJACK)
+            {
+                userOverallScore = (userOverallScore + 1);
+                MessageBox.Show("You won" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal > BLACKJACK && userTotal > BLACKJACK)
+            {
+                MessageBox.Show("It's a tie" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal == BLACKJACK && userTotal == BLACKJACK)
+            {
+                MessageBox.Show("It's a tie " +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal == BLACKJACK)
+            {
+                computerOverallScore = (computerOverallScore + 1);
+
+                MessageBox.Show("You lost to a blackjack " +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (userTotal == BLACKJACK)
+            {
+                userOverallScore = (userOverallScore + 1);
+                MessageBox.Show("You won with a blackjack" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal == BLACKJACK && computerHand.Count() == 2)
+            {
+                computerOverallScore = (computerOverallScore + 2);
+
+                MessageBox.Show("You lost to a special blackjack" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (userTotal == BLACKJACK && userHand.Count() == 2)
+            {
+                userOverallScore = (userOverallScore + 2);
+                MessageBox.Show("You won with a special blackjack" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal > userTotal)
+            {
+                userOverallScore = (userOverallScore + 1);
+                MessageBox.Show("You won" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else if (computerTotal < userTotal)
+            {
+                userOverallScore = (userOverallScore + 1);
+                MessageBox.Show("You won" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+            else
+            {
+                MessageBox.Show("It's a tie" +
+                    "select New Game to continue", "Results");
+                roundsPlayed = (roundsPlayed + 1);
+            }
+        }
+
     }
 }
