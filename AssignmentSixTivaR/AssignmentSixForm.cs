@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 /*
  * Created by: Tiva Rait
  * Created on: May-21-2018
@@ -43,6 +44,9 @@ namespace AssignmentSixTivaR
         int computerLastPictureBoxX = 136;
         int computerLastPictureBoxY = 94;
 
+        // Number of picture boxes that have been created
+        int numOfPicBoxes;
+
 
         // To make the random number generator
         Random randomNumberGenerator = new Random();
@@ -60,6 +64,7 @@ namespace AssignmentSixTivaR
         public frmAssignmentSix()
         {
             InitializeComponent();
+            this.ResetAll();
         }
 
         private void mniExit_Click(object sender, EventArgs e)
@@ -81,6 +86,8 @@ namespace AssignmentSixTivaR
             roundsPlayed = 0;
             lblRounds.Text = ("Round " + roundsPlayed);
 
+            // Clear card deck
+            cardDeck.Clear();
 
             // Add all of the Cards to the cardDeck 
             cardDeck.Add("A H");
@@ -163,6 +170,13 @@ namespace AssignmentSixTivaR
         // Description: Starts a new round or "New game"
         private void StartNewGame()
         {
+            // Update all of the text
+            lblUserOverallScore.Text = ("Your Score: " + userOverallScore);
+            lblComputerOverallScore.Text = ("Your Score: " + computerOverallScore);
+            lblRounds.Text = ("Round " + roundsPlayed);
+            lblUserCardTotal.Text = ("Card Total = 0");
+            lblCompCardTotal.Text = ("Card Total = 0");
+
             // Set computers turn to be false just to be safe
             computerTurn = false;
 
@@ -178,10 +192,13 @@ namespace AssignmentSixTivaR
             //Need to Delete picture boxes and everything from previous rounds
             ///////////////////////////////////////////////////////
 
+            // Let the user take action
+            grbUserAction.Enabled = true;
+
             // Make sure ace and eleven are hidden 
             grbAceElevenOrOne.Hide();
             // Remove generated picture boxes
-            this.RemoveGeneratedPictureBoxes();
+            RemoveGeneratedPictureBoxes();
 
             // Set the values back to the original amounts for their locations
             userLastPictureBoxX = 136;
@@ -189,10 +206,19 @@ namespace AssignmentSixTivaR
             computerLastPictureBoxX = 136;
             computerLastPictureBoxY = 94;
 
-            // Loop that will make sure the User is dealt at least two cards
-            for (int counter = 0; counter < 2; counter++)
+            if (cardDeck.Count() <= 8)
             {
-                this.DealUserNewCard();
+                MessageBox.Show("Sorry we ran out of cards. Let's start over again.", "Dealer");
+                
+                this.ResetAll();
+            }
+            else
+            {
+                // Loop that will make sure the User is dealt at least two cards
+                for (int counter = 0; counter < 2; counter++)
+                {
+                    this.DealUserNewCard();
+                }
             }
 
         }
@@ -277,6 +303,8 @@ namespace AssignmentSixTivaR
                 userTotal = (userTotal + 10);
             }
 
+            lblUserCardTotal.Text = ("Card Total = " + userTotal);
+
             if (userTotal > 15)
             {
                 MessageBox.Show("The odds are not in your favour, " +
@@ -307,7 +335,7 @@ namespace AssignmentSixTivaR
                 GeneratePictureBox(userLastPictureBoxX, userLastPictureBoxY, newCard);
             }
 
-
+            numOfPicBoxes = numOfPicBoxes + 1;
         }
 
         // Function: GeneratePictureBox
@@ -537,7 +565,6 @@ namespace AssignmentSixTivaR
                 tmpPicCard.Image = Properties.Resources.Front;
             }
 
-
             // stretch the image to the size of the picture box
             tmpPicCard.SizeMode = PictureBoxSizeMode.StretchImage;
 
@@ -554,12 +581,15 @@ namespace AssignmentSixTivaR
         // Description:
         private void RemoveGeneratedPictureBoxes ()
         {
-            foreach (Control control in this.Controls)
+            for (int counter = 1; counter <= numOfPicBoxes; counter++)
             {
-                PictureBox picture = control as PictureBox;
-                if (picture != null)
+                foreach (Control control in this.Controls)
                 {
-                    this.Controls.Remove(picture);
+                    PictureBox picture = control as PictureBox;
+                    if (picture != null)
+                    {
+                        this.Controls.Remove(picture);
+                    }
                 }
             }
             
@@ -591,6 +621,9 @@ namespace AssignmentSixTivaR
         // Description: Selects the computer's new cards
         private void DealComputerNewCard()
         {
+            // To stop the user from taking any more actions
+            grbUserAction.Enabled = false;
+
             // Local variables
             int randomComputerCard;
             string newComputerCard;
@@ -613,6 +646,8 @@ namespace AssignmentSixTivaR
             this.CalculateComputerCards(newComputerCard);
 
             // Display the card
+            // First Set the computer turn bool to be true
+            computerTurn = true;
             this.DisplayCard(newComputerCard);
 
         }
@@ -635,40 +670,42 @@ namespace AssignmentSixTivaR
             }
             else if (cardValue == "2 H" || cardValue == "2 D" || cardValue == "2 C" || cardValue == "2 S")
             {
-                userTotal = (computerTotal + 2);
+                computerTotal = (computerTotal + 2);
             }
             else if (cardValue == "3 H" || cardValue == "3 D" || cardValue == "3 C" || cardValue == "3 S")
             {
-                userTotal = (computerTotal + 3);
+                computerTotal = (computerTotal + 3);
             }
             else if (cardValue == "4 H" || cardValue == "4 D" || cardValue == "4 C" || cardValue == "4 S")
             {
-                userTotal = (computerTotal + 4);
+                computerTotal = (computerTotal + 4);
             }
             else if (cardValue == "5 H" || cardValue == "5 D" || cardValue == "5 C" || cardValue == "5 S")
             {
-                userTotal = (computerTotal + 5);
+                computerTotal = (computerTotal + 5);
             }
             else if (cardValue == "6 H" || cardValue == "6 D" || cardValue == "6 C" || cardValue == "6 S")
             {
-                userTotal = (computerTotal + 6);
+                computerTotal = (computerTotal + 6);
             }
             else if (cardValue == "7 H" || cardValue == "7 D" || cardValue == "7 C" || cardValue == "7 S")
             {
-                userTotal = (computerTotal + 7);
+                computerTotal = (computerTotal + 7);
             }
             else if (cardValue == "8 H" || cardValue == "8 D" || cardValue == "8 C" || cardValue == "8 S")
             {
-                userTotal = (computerTotal + 8);
+                computerTotal = (computerTotal + 8);
             }
             else if (cardValue == "9 H" || cardValue == "9 D" || cardValue == "9 C" || cardValue == "9 S")
             {
-                userTotal = (computerTotal + 9);
+                computerTotal = (computerTotal + 9);
             }
             else
             {
-                userTotal = (computerTotal + 10);
+                computerTotal = (computerTotal + 10);
             }
+
+            lblCompCardTotal.Text = ("Card Total = " + computerTotal);
 
             if (computerTotal > 14)
             {
@@ -679,34 +716,35 @@ namespace AssignmentSixTivaR
                 DealComputerNewCard();
             }
 
-            if (computerTotal > BLACKJACK)
-            {
-                FindWinner();
-            }
         }
 
         // FindWinner
         public void FindWinner()
         {
+            // Set computer turn to be false
+            computerTurn = false;
+
+            // To slow the game down and give the user time to process what is happening
+
             // Find the winner
             if (userTotal > BLACKJACK && computerTotal < BLACKJACK)
             {
                 computerOverallScore = (computerOverallScore + 1);
 
-                MessageBox.Show("You lost" +
+                MessageBox.Show("You lost " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else if (computerTotal > BLACKJACK && userTotal < BLACKJACK)
             {
                 userOverallScore = (userOverallScore + 1);
-                MessageBox.Show("You won" +
+                MessageBox.Show("You won " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else if (computerTotal > BLACKJACK && userTotal > BLACKJACK)
             {
-                MessageBox.Show("It's a tie" +
+                MessageBox.Show("It's a tie " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
@@ -727,7 +765,7 @@ namespace AssignmentSixTivaR
             else if (userTotal == BLACKJACK)
             {
                 userOverallScore = (userOverallScore + 1);
-                MessageBox.Show("You won with a blackjack" +
+                MessageBox.Show("You won with a blackjack " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
@@ -735,38 +773,49 @@ namespace AssignmentSixTivaR
             {
                 computerOverallScore = (computerOverallScore + 2);
 
-                MessageBox.Show("You lost to a special blackjack" +
+                MessageBox.Show("You lost to a special blackjack " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else if (userTotal == BLACKJACK && userHand.Count() == 2)
             {
                 userOverallScore = (userOverallScore + 2);
-                MessageBox.Show("You won with a special blackjack" +
+                MessageBox.Show("You won with a special blackjack " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else if (computerTotal > userTotal)
             {
                 userOverallScore = (userOverallScore + 1);
-                MessageBox.Show("You won" +
+                MessageBox.Show("You won " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else if (computerTotal < userTotal)
             {
                 userOverallScore = (userOverallScore + 1);
-                MessageBox.Show("You won" +
+                MessageBox.Show("You won " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
             else
             {
-                MessageBox.Show("It's a tie" +
+                MessageBox.Show("It's a tie " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
+
+            grbUserAction.Enabled = false;
         }
 
+        private void btnHit_Click(object sender, EventArgs e)
+        {
+            DealUserNewCard();
+        }
+
+        private void mniNewGame_Click(object sender, EventArgs e)
+        {
+            StartNewGame();
+        }
     }
 }
