@@ -108,7 +108,7 @@
             this.mniFile});
             this.mnuMenu.Location = new System.Drawing.Point(0, 0);
             this.mnuMenu.Name = "mnuMenu";
-            this.mnuMenu.Size = new System.Drawing.Size(623, 24);
+            this.mnuMenu.Size = new System.Drawing.Size(853, 24);
             this.mnuMenu.TabIndex = 3;
             this.mnuMenu.Text = "menuStrip1";
             // 
@@ -125,7 +125,7 @@
             // mniNewGame
             // 
             this.mniNewGame.Name = "mniNewGame";
-            this.mniNewGame.Size = new System.Drawing.Size(180, 22);
+            this.mniNewGame.Size = new System.Drawing.Size(132, 22);
             this.mniNewGame.Text = "New Game";
             this.mniNewGame.Click += new System.EventHandler(this.mniNewGame_Click);
             // 
@@ -235,7 +235,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 509);
+            this.ClientSize = new System.Drawing.Size(853, 509);
             this.Controls.Add(this.grbAceElevenOrOne);
             this.Controls.Add(this.grbRoundsInfo);
             this.Controls.Add(this.lblUserCardTotal);

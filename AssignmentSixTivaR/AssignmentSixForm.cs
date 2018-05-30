@@ -239,6 +239,15 @@ namespace AssignmentSixTivaR
             // Randomly generate the index Number
             randomUserCard = randomNumberGenerator.Next(MIN_NUM, maxNum + 1);
 
+
+            // Debugging
+            Console.WriteLine("randomUserCard = " + randomUserCard);
+            Console.WriteLine("Number of Cards in cardDeck =" + cardDeck.Count());
+
+            // Minus one for the randomUserCard
+            randomUserCard = randomUserCard - 1;
+            Console.WriteLine("randomUserCard = " + randomUserCard);
+
             // Add the card from cardDeck to userHand 
             newUserCard = cardDeck[randomUserCard];
 
@@ -634,6 +643,14 @@ namespace AssignmentSixTivaR
             // Randomly generate the index Number
             randomComputerCard = randomNumberGenerator.Next(MIN_NUM, maxNum + 1);
 
+            // Debugging
+            Console.WriteLine("randomComputerCard = " + randomComputerCard);
+            Console.WriteLine("Number of Cards in cardDeck =" + cardDeck.Count());
+
+            // Minus one for the randomUserCard
+            randomComputerCard = randomComputerCard - 1;
+            Console.WriteLine("randomComputerCard = " + randomComputerCard);
+
             // Add the card from cardDeck to userHand 
             newComputerCard = cardDeck[randomComputerCard];
 
@@ -665,8 +682,14 @@ namespace AssignmentSixTivaR
         {
             if (cardValue == "A H" || cardValue == "A D" || cardValue == "A C" || cardValue == "A S")
             {
-                grbAceElevenOrOne.Show();
-                grbUserAction.Enabled = false;
+                if (computerTotal <= 9)
+                {
+                    computerTotal = (computerTotal + 11);
+                }
+                else
+                {
+                    computerTotal = (computerTotal + 1);
+                }
             }
             else if (cardValue == "2 H" || cardValue == "2 D" || cardValue == "2 C" || cardValue == "2 S")
             {
@@ -786,8 +809,8 @@ namespace AssignmentSixTivaR
             }
             else if (computerTotal > userTotal)
             {
-                userOverallScore = (userOverallScore + 1);
-                MessageBox.Show("You won " +
+                computerOverallScore = (computerOverallScore + 1);
+                MessageBox.Show("You lost " +
                     "select New Game to continue", "Results");
                 roundsPlayed = (roundsPlayed + 1);
             }
