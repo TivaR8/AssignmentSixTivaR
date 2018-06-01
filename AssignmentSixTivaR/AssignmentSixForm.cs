@@ -585,9 +585,9 @@ namespace AssignmentSixTivaR
         }
 
         // Function: RemoveGeneratedPictureBoxes 
-        // Input:
-        // Output:
-        // Description:
+        // Input: void
+        // Output: void
+        // Description: Removes the generated picture boxes
         private void RemoveGeneratedPictureBoxes ()
         {
             for (int counter = 1; counter <= numOfPicBoxes; counter++)
